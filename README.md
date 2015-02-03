@@ -1,0 +1,2 @@
+# IntellectualOwl
+Minimalistic sql client.
