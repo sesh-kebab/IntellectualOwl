@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using ICSharpCode.AvalonEdit;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,9 @@ namespace IntellectualOwl
     {
         public MainWindow()
         {
+            ViewModel vm = new ViewModel();
+            this.DataContext = vm;
+
             InitializeComponent();
         }
     }
