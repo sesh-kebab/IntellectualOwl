@@ -4,6 +4,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:l="clr-namespace:IntellectualOwl"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         Height="350" Width="525" ShowTitleBar="False">
     <Grid>
         <TabControl Margin="20,20,20,10" x:Name="tabControl"
@@ -17,27 +18,37 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
                             <RowDefinition />
                             <RowDefinition Height="5" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-
+                        <!-- Commands -->
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="30" Width="30">
+                                <fa:ImageAwesome Icon="Play" VerticalAlignment="Center" HorizontalAlignment="Center" Height="8" Width="8" />
+                            </Button>
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="30" Width="30">
+                                <fa:ImageAwesome Icon="Stop" VerticalAlignment="Center" HorizontalAlignment="Center" Height="8" Width="8" />
+                            </Button>
+                        </StackPanel>
+                        
                         <!-- Sql text editor -->
-                        <l:CustomTextEditor x:Name="txtQuery" ShowLineNumbers="True" FontFamily="Consolas"/>
+                        <l:CustomTextEditor x:Name="txtQuery" ShowLineNumbers="True" FontFamily="Consolas" Grid.Row="1"/>
                         
                         <!-- Extended Splitter -->
-                        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch"
+                        <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch"
 			                VerticalAlignment="Center"
 			                Background="Black" 
 			                ShowsPreview="False"
 			                Height="1"/>
-                        <Grid Grid.Row="1">
+                        <Grid Grid.Row="2">
                             <Rectangle>
                             </Rectangle>
                         </Grid>
                         
                         <!-- Data Grid for the sql results-->
-                        <DataGrid Grid.Row="2" />
+                        <DataGrid Grid.Row="3" />
                     </Grid>
                 </DataTemplate>
             </TabControl.ContentTemplate>
