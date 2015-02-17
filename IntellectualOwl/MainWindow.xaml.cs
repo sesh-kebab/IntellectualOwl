@@ -30,7 +30,6 @@ namespace IntellectualOwl
 
             vm = new ViewModel();
             this.DataContext = vm;
-            tabControl.SelectedIndex = 0;
         }
     }
 }

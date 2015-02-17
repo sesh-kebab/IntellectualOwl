@@ -5,17 +5,49 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:l="clr-namespace:IntellectualOwl"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
-        Height="350" Width="525" ShowTitleBar="False">
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        Height="350" Width="525" ShowTitleBar="False" EnableDWMDropShadow="True">
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/mahapps.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Ellipse x:Key="AppThemeMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     StrokeThickness="1"
+                     Stroke="{Binding BorderColorBrush, Mode=OneWay}"
+                     Fill="{Binding ColorBrush, Mode=OneWay}" />
+            <Ellipse x:Key="AccentMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     Fill="{Binding ColorBrush, Mode=OneWay}" />
+
+            <Style x:Key="AppThemeMenuItemStyle" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MetroMenuItem}">
+                <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="Icon" Value="{StaticResource AppThemeMenuIcon}" />
+                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
+            </Style>
+
+            <Style x:Key="AccentColorMenuItemStyle"
+                   TargetType="{x:Type MenuItem}"
+                   BasedOn="{StaticResource MetroMenuItem}">
+                <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
+                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
+            </Style>
+        </ResourceDictionary>
+    </mah:MetroWindow.Resources>
     <Grid>
-        <TabControl Margin="20,20,20,10" x:Name="tabControl"
-                    ItemsSource="{Binding Tabs}" SelectedIndex="{Binding SelectedIndex}"
-                    IsSynchronizedWithCurrentItem="True">
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Header}" />
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-            <TabControl.ContentTemplate>
+        <dragablz:TabablzControl ItemsSource="{Binding Tabs}" HeaderMemberPath="Header" 
+                                 Margin="20,24,20,10" BorderBrush="White">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
+            </dragablz:TabablzControl.InterTabController>
+            <dragablz:TabablzControl.ContentTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -33,9 +65,9 @@
                                 <fa:ImageAwesome Icon="Stop" VerticalAlignment="Center" HorizontalAlignment="Center" Height="8" Width="8" />
                             </Button>
                         </StackPanel>
-                        
                         <!-- Sql text editor -->
-                        <l:CustomTextEditor x:Name="txtQuery" ShowLineNumbers="True" FontFamily="Consolas" Grid.Row="1" Document="{Binding Document}" />
+                        <l:CustomTextEditor x:Name="txtQuery" ShowLineNumbers="True" FontFamily="Consolas" Grid.Row="1" Document="{Binding Document}"
+                                            HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
                         
                         <!-- Extended Splitter -->
                         <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch"
@@ -47,12 +79,11 @@
                             <Rectangle>
                             </Rectangle>
                         </Grid>
-                        
                         <!-- Data Grid for the sql results-->
                         <!--<DataGrid Grid.Row="3" />-->
                     </Grid>
                 </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>
+            </dragablz:TabablzControl.ContentTemplate>
+        </dragablz:TabablzControl>
     </Grid>
 </mah:MetroWindow>

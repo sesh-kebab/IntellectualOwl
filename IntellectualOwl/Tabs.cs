@@ -9,21 +9,36 @@ using System.ComponentModel;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Editing;
+using Dragablz;
 
 namespace IntellectualOwl
 {
     public class ViewModel
     {
+        private int tabCounter = 0;
+        private readonly IInterTabClient _interTabClient;
+        public IInterTabClient InterTabClient
+        {
+            get { return _interTabClient; }
+        }
         public ObservableCollection<TabItem> Tabs { get; set; }
-        private int selectedIndex;
         public int SelectedIndex { get; set; }
 
         public ViewModel()
         {
+            _interTabClient = new DefaultInterTabClient();
+
             Tabs = new ObservableCollection<TabItem>();
-            Tabs.Add(new TabItem() { Header = "hello1", Text = string.Empty });
-            Tabs.Add(new TabItem() { Header = "hello2", Text = string.Empty });
-            Tabs.Add(new TabItem() { Header = "hello3", Text = string.Empty });
+            Tabs.Add(new TabItem() { Header = "query1" });
+            Tabs.Add(new TabItem() { Header = "query2" });
+            Tabs.Add(new TabItem() { Header = "query3" });
+
+            tabCounter = Tabs.Count;
+        }
+
+        public Func<object> NewItemFactory
+        {
+            get { return () => new TabItem() { Header = string.Format("query{0}", ++tabCounter) }; }
         }
     }
 
@@ -67,6 +82,8 @@ namespace IntellectualOwl
                 }
             }
         }
+
+
 
         #endregion
     }
