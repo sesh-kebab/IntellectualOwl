@@ -10,6 +10,7 @@ using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Editing;
 using Dragablz;
+using System.Data;
 
 namespace IntellectualOwl
 {
@@ -83,8 +84,34 @@ namespace IntellectualOwl
             }
         }
 
+        DataTable results = null;
+        public DataTable Results
+        {
+            get
+            {
+                if (results == null)
+                    results = CreateRandomTable();
 
+                return results;
+            }
+            set
+            {
+                results = value;
+            }
+        }
 
         #endregion
+
+        private DataTable CreateRandomTable()
+        {
+            DataTable table = new DataTable();
+
+            table.Columns.Add(new DataColumn("adf"));
+            table.Columns.Add(new DataColumn("aasdfadfdf"));
+            table.Columns.Add(new DataColumn("dfs"));
+            table.Columns.Add(new DataColumn("af asdf"));
+
+            return table;
+        }
     }
 }
