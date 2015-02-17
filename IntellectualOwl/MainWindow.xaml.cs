@@ -22,12 +22,15 @@ namespace IntellectualOwl
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        ViewModel vm = null;
+
         public MainWindow()
         {
-            ViewModel vm = new ViewModel();
-            this.DataContext = vm;
-
             InitializeComponent();
+
+            vm = new ViewModel();
+            this.DataContext = vm;
+            tabControl.SelectedIndex = 0;
         }
     }
 }

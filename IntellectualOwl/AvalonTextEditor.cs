@@ -15,9 +15,9 @@ namespace IntellectualOwl
 {
     public class CustomTextEditor : TextEditor
     {
-        bool _reloadingChanges = false;
+        bool isDataContextChanging = false;
 
-        public TabItem CurrentTabModel
+        public TabItem SelectedItem
         {
             get
             {
@@ -25,59 +25,35 @@ namespace IntellectualOwl
             }
         }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public CustomTextEditor()
         {
+            DataContextChanged += CustomTextEditor_DataContextChanged;
+            TextChanged += CustomTextEditor_TextChanged;
             TextArea.Caret.PositionChanged += Caret_PositionChanged;
-            TextArea.Document.TextChanged += Document_TextChanged;
-            TextArea.SelectionChanged += TextArea_SelectionChanged;
-
-            GotFocus += CustomTextEditor_GotFocus;
         }
 
-        void CustomTextEditor_GotFocus(object sender, RoutedEventArgs e)
+        void CustomTextEditor_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            try
-            {
-                _reloadingChanges = true;
-
-                Document.Text = CurrentTabModel.Text;
-                TextArea.Caret.Offset = CurrentTabModel.Offset;
-
-                if (CurrentTabModel.Selection == null)
-                    CurrentTabModel.Selection = TextArea.Selection;
-                else
-                    TextArea.Selection = CurrentTabModel.Selection;
-            }
-            finally
-            {
-                _reloadingChanges = false;
-            }
-            
+            isDataContextChanging = true;
         }
 
-        void Document_TextChanged(object sender, EventArgs e)
+        void CustomTextEditor_TextChanged(object sender, EventArgs e)
         {
-            if (_reloadingChanges)
-                return;
+            if (isDataContextChanging)
+                TextArea.Caret.Offset = SelectedItem.Offset;
 
-            CurrentTabModel.Text = Document.Text;
+            isDataContextChanging = false;
         }
 
         void Caret_PositionChanged(object sender, EventArgs e)
         {
-            if (_reloadingChanges)
+            if (isDataContextChanging)
                 return;
 
-            CurrentTabModel.Offset = TextArea.Caret.Offset;
-
-        }
-
-        void TextArea_SelectionChanged(object sender, EventArgs e)
-        {
-            if (_reloadingChanges)
-                return;
-
-            CurrentTabModel.Selection = TextArea.Selection;
+            SelectedItem.Offset = TextArea.Caret.Offset;
         }
     }
 }
