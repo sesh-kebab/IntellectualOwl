@@ -7,6 +7,7 @@
 		xmlns:fa="http://schemas.fontawesome.io/icons/"
 		xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:sync="clr-namespace:Syncfusion.UI.Xaml.Grid;assembly=Syncfusion.SfGrid.WPF"
+        xmlns:extToolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
 		Height="350" Width="525" ShowTitleBar="False" EnableDWMDropShadow="True" ResizeMode="CanResizeWithGrip"
         MinHeight="200" MinWidth="250">
     <mah:MetroWindow.Resources>
@@ -43,6 +44,22 @@
             </Style>
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button>
+                <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Settings" />
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout Header="Settings" Position="Right" Width="200">
+                <!-- Your custom content here -->
+                
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
+
     <Grid>
         <dragablz:TabablzControl ItemsSource="{Binding Tabs}" HeaderMemberPath="Header" 
 								 Margin="20,24,20,10" BorderBrush="White">
@@ -60,17 +77,27 @@
                         </Grid.RowDefinitions>
                         <!-- Commands -->
                         <StackPanel Orientation="Horizontal">
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="30" Width="30">
-                                <fa:ImageAwesome Icon="Play" VerticalAlignment="Center" HorizontalAlignment="Center" Height="8" Width="8" />
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="30" Width="30" ToolTip="Execute">
+                                <fa:ImageAwesome Icon="Play" VerticalAlignment="Center" HorizontalAlignment="Center" Height="8" Width="8" Foreground="LightGreen" />
                             </Button>
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="30" Width="30">
-                                <fa:ImageAwesome Icon="Stop" VerticalAlignment="Center" HorizontalAlignment="Center" Height="8" Width="8" />
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="30" Width="30" ToolTip="Commit">
+                                <fa:ImageAwesome Icon="Check" VerticalAlignment="Center" HorizontalAlignment="Center" Height="8" Width="8" Foreground="LightSkyBlue" />
                             </Button>
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="30" Width="30" ToolTip="Rollback">
+                                <fa:ImageAwesome Icon="Times" VerticalAlignment="Center" HorizontalAlignment="Center" Height="8" Width="8" Foreground="IndianRed" />
+                            </Button>
+                            <Rectangle Margin="10,0,10,0" Height="24" Width="2" Stroke="LightGray" />
+                            <!-- custom control for creating and selecting databases needed -->
+                            <extToolkit:DropDownButton Content="Create/Select Database" BorderThickness="0" FontFamily="Segoe UI" Background="{x:Null}" FontSize="14.667" Style="{DynamicResource DropDownButtonStyle1}" >
+                                <extToolkit:DropDownButton.DropDownContent>
+                                    <extToolkit:ColorCanvas />
+                                </extToolkit:DropDownButton.DropDownContent>
+                            </extToolkit:DropDownButton>
                         </StackPanel>
                         
                         <!-- Sql text editor -->
                         <l:CustomTextEditor x:Name="txtQuery" ShowLineNumbers="True" FontFamily="Consolas" Grid.Row="1" Document="{Binding Document}"
-											HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Language="SQL"/>
+											HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Language="SQL" FontStretch="Expanded"/>
 
                         <!-- Extended Splitter -->
                         <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch"
