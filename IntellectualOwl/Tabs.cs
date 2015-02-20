@@ -30,9 +30,9 @@ namespace IntellectualOwl
             _interTabClient = new DefaultInterTabClient();
 
             Tabs = new ObservableCollection<TabItem>();
-            Tabs.Add(new TabItem() { Header = "query1" });
-            Tabs.Add(new TabItem() { Header = "query2" });
-            Tabs.Add(new TabItem() { Header = "query3" });
+            //Tabs.Add(new TabItem() { Header = "query1" });
+            //Tabs.Add(new TabItem() { Header = "query2" });
+            //Tabs.Add(new TabItem() { Header = "query3" });
 
             tabCounter = Tabs.Count;
         }
@@ -106,12 +106,27 @@ namespace IntellectualOwl
         {
             DataTable table = new DataTable();
 
-            table.Columns.Add(new DataColumn("adf"));
-            table.Columns.Add(new DataColumn("aasdfadfdf"));
-            table.Columns.Add(new DataColumn("dfs"));
-            table.Columns.Add(new DataColumn("af asdf"));
+            //table.Columns.Add(new DataColumn("adf"));
+            //table.Columns.Add(new DataColumn("aasdfadfdf"));
+            //table.Columns.Add(new DataColumn("dfs"));
+            //table.Columns.Add(new DataColumn("af asdf"));
 
             return table;
+        }
+    }
+
+    public class InterTabClient : IInterTabClient
+    {
+
+        public INewTabHost<Window> GetNewHost(IInterTabClient interTabClient, object partition, TabablzControl source)
+        {
+            return null;
+        }
+
+        public TabEmptiedResponse TabEmptiedHandler(TabablzControl tabControl, Window window)
+        {
+            var resp = new TabEmptiedResponse();
+            return resp;
         }
     }
 }

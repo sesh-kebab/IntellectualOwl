@@ -29,7 +29,7 @@ namespace IntellectualOwl
             InitializeComponent();
 
             vm = new ViewModel();
-            this.DataContext = vm;
+            this.DataContext = vm;            
         }
     }
 }
