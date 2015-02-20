@@ -30,9 +30,7 @@ namespace IntellectualOwl
             _interTabClient = new DefaultInterTabClient();
 
             Tabs = new ObservableCollection<TabItem>();
-            //Tabs.Add(new TabItem() { Header = "query1" });
-            //Tabs.Add(new TabItem() { Header = "query2" });
-            //Tabs.Add(new TabItem() { Header = "query3" });
+            Tabs.Add(new TabItem() { Header = "query1" });
 
             tabCounter = Tabs.Count;
         }
